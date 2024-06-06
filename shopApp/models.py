@@ -47,14 +47,21 @@ class OrderItem(models.Model):
 
 
 class Order(models.Model):
+
+    STATUS_CHOICES = [
+        ('PENDING', 'PENDING'),
+        ('PROCESSING', 'PROCESSING'),
+        ('DELIVERED', 'DELIVERED'),
+        ('CANCELLED', 'CANCELLED')
+    ] 
     orderItem = models.ForeignKey(OrderItem, on_delete=models.CASCADE, blank=True, null=True)
-    status = models.CharField(choices=[('pending', 'Pending'), ('paid', 'Paid')]),
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, blank=True, null=True)
+    status = models.CharField(max_length=255, choices=STATUS_CHOICES, null=True, blank=True)
     place_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.status
-
+    
 
 
 
